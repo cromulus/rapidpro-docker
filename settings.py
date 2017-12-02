@@ -69,6 +69,10 @@ AWS_LOCATION = env('AWS_LOCATION', '')
 AWS_STATIC = env('AWS_STATIC', bool(AWS_STORAGE_BUCKET_NAME))
 AWS_MEDIA = env('AWS_MEDIA', bool(AWS_STORAGE_BUCKET_NAME))
 
+# default to aws query strings being off
+AWS_QUERYSTRING_EXPIRE = env('AWS_QUERYSTRING_EXPIRE', 3600)
+AWS_QUERYSTRING_AUTH = env('AWS_QUERYSTRING_AUTH', False)
+
 if AWS_STORAGE_BUCKET_NAME:
     # Tell django-storages that when coming up with the URL for an item in S3 storage, keep
     # it simple - just use this domain plus the path. (If this isn't set, things get complicated).
