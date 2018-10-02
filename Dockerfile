@@ -11,7 +11,7 @@ ENV PIP_RETRIES=120 \
 # TODO extract openssl and tar to their own upgrade/install line
 RUN set -ex \
   && apk add --no-cache nodejs-lts npm openssl tar
-RUN npm install -g coffee-script less bower
+RUN npm install -g coffeescript less bower
 
 WORKDIR /rapidpro
 
