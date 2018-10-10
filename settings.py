@@ -20,7 +20,7 @@ INSTALLED_APPS = (
 
 ROOT_URLCONF = env('ROOT_URLCONF', 'temba.urls')
 
-DEBUG = env('DJANGO_DEBUG', 'off') == 'on'
+DEBUG = env('DJANGO_DEBUG', False)
 
 GEOS_LIBRARY_PATH = '/usr/local/lib/libgeos_c.so'
 GDAL_LIBRARY_PATH = '/usr/local/lib/libgdal.so'
@@ -103,7 +103,7 @@ if not AWS_STATIC:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     MIDDLEWARE = list(MIDDLEWARE) + ['whitenoise.middleware.WhiteNoiseMiddleware']
 
-COMPRESS_ENABLED = env('DJANGO_COMPRESSOR', 'on') == 'on'
+COMPRESS_ENABLED = env('DJANGO_COMPRESSOR', True)
 COMPRESS_OFFLINE = False
 
 COMPRESS_URL = STATIC_URL
@@ -116,11 +116,11 @@ COMPRESS_OFFLINE_MANIFEST = 'manifest-%s.json' % env('RAPIDPRO_VERSION', require
 
 MAGE_AUTH_TOKEN = env('MAGE_AUTH_TOKEN', None)
 MAGE_API_URL = env('MAGE_API_URL', 'http://localhost:8026/api/v1')
-SEND_MESSAGES = env('SEND_MESSAGES', 'off') == 'on'
-SEND_WEBHOOKS = env('SEND_WEBHOOKS', 'off') == 'on'
-SEND_EMAILS = env('SEND_EMAILS', 'off') == 'on'
-SEND_AIRTIME = env('SEND_AIRTIME', 'off') == 'on'
-SEND_CALLS = env('SEND_CALLS', 'off') == 'on'
+SEND_MESSAGES = env('SEND_MESSAGES', False)
+SEND_WEBHOOKS = env('SEND_WEBHOOKS', False)
+SEND_EMAILS = env('SEND_EMAILS', False)
+SEND_AIRTIME = env('SEND_AIRTIME', False)
+SEND_CALLS = env('SEND_CALLS', False)
 IP_ADDRESSES = tuple(filter(None, env('IP_ADDRESSES', '').split(',')))
 
 EMAIL_HOST = env('EMAIL_HOST', 'smtp.gmail.com')
@@ -128,10 +128,10 @@ EMAIL_HOST_USER = env('EMAIL_HOST_USER', 'server@temba.io')
 EMAIL_PORT = int(env('EMAIL_PORT', 25))
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', 'server@temba.io')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', 'mypassword')
-EMAIL_USE_TLS = env('EMAIL_USE_TLS', 'on') == 'on'
+EMAIL_USE_TLS = env('EMAIL_USE_TLS', 'True')
 SECURE_PROXY_SSL_HEADER = (
     env('SECURE_PROXY_SSL_HEADER', 'HTTP_X_FORWARDED_PROTO'), 'https')
-IS_PROD = env('IS_PROD', 'off') == 'on'
+IS_PROD = env('IS_PROD', False)
 
 BRANDING = {
     'rapidpro.io': {
