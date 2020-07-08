@@ -81,32 +81,31 @@ AWS_LOCATION = env('AWS_LOCATION', '')
 AWS_STATIC = env('AWS_STATIC', False)
 AWS_MEDIA = env('AWS_MEDIA', False)
 
-if AWS_STORAGE_BUCKET_NAME:
-    # Tell django-storages that when coming up with the URL for an item in S3 storage, keep
-    # it simple - just use this domain plus the path. (If this isn't set, things get complicated).
-    # This controls how the `static` template tag from `staticfiles` gets expanded, if you're using it.
-    # We also use it in the next setting.
-    if CDN_DOMAIN_NAME:
+if CDN_DOMAIN_NAME:
         AWS_S3_DOMAIN = CDN_DOMAIN_NAME
     else:
         AWS_S3_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-    if AWS_STATIC:
-        # This is used by the `static` template tag from `static`, if you're using that. Or if anything else
-        # refers directly to STATIC_URL. So it's safest to always set it.
-        STATIC_URL = "https://%s/" % AWS_S3_DOMAIN
 
-        # Tell the staticfiles app to use S3Boto storage when writing the collected static files (when
-        # you run `collectstatic`).
-        STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# Tell django-storages that when coming up with the URL for an item in S3 storage, keep
+# it simple - just use this domain plus the path. (If this isn't set, things get complicated).
+# This controls how the `static` template tag from `staticfiles` gets expanded, if you're using it.
+# We also use it in the next setting.
+if AWS_STATIC:
+    # This is used by the `static` template tag from `static`, if you're using that. Or if anything else
+    # refers directly to STATIC_URL. So it's safest to always set it.
+    STATIC_URL = "https://%s/" % AWS_S3_DOMAIN
 
-        COMPRESS_STORAGE = STATICFILES_STORAGE
+    # Tell the staticfiles app to use S3Boto storage when writing the collected static files (when
+    # you run `collectstatic`).
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-    if AWS_MEDIA:
-        MEDIAFILES_LOCATION = 'media'
-        MEDIA_URL = "https://%s/%s/" % (AWS_S3_DOMAIN, MEDIAFILES_LOCATION)
+    COMPRESS_STORAGE = STATICFILES_STORAGE
 
-        DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+if AWS_MEDIA:
+    MEDIAFILES_LOCATION = 'media'
+    MEDIA_URL = "https://%s/%s/" % (AWS_S3_DOMAIN, MEDIAFILES_LOCATION)
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 if not AWS_STATIC:
     STATIC_URL = '/sitestatic/'
@@ -121,7 +120,7 @@ COMPRESS_URL = STATIC_URL
 # (e.g., translations) are stored
 COMPRESS_ROOT = STATIC_ROOT
 COMPRESS_CSS_HASHING_METHOD = 'content'
-COMPRESS_OFFLINE_MANIFEST = 'manifest-%s.json' % env('RAPIDPRO_VERSION', required=True)
+COMPRESS_ROOTRESS_OFFLINE_MANIFEST = 'manifest-%s.json' % env('RAPIDPRO_VERSION', required=True)
 
 MAGE_AUTH_TOKEN = env('MAGE_AUTH_TOKEN', None)
 MAGE_API_URL = env('MAGE_API_URL', 'http://localhost:8026/api/v1')
